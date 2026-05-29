@@ -1,0 +1,9 @@
+<div class="hello">
+  <p-card header="HabitTracker">
+    <p>Aspire + ASP.NET Core + Angular + PrimeNG starter.</p>
+    <p-button label="Say hello" icon="pi pi-send" [loading]="loading()" (onClick)="load()" />
+    @if (message()) {
+      <p class="hello__message">{{ message() }}</p>
+    }
+  </p-card>
+</div>

@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="HabitTracker.AppHost/HabitTracker.AppHost.csproj" />
+  <Project Path="HabitTracker.ServiceDefaults/HabitTracker.ServiceDefaults.csproj" />
+  <Project Path="HabitTracker.WebApp/HabitTracker.WebApp.csproj" />
+</Solution>
