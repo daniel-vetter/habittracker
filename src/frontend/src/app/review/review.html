@@ -1,12 +1,12 @@
 <div class="review">
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="review__header">
+      <div class="header">
         <h2>Heute</h2>
         @if (logicalDate()) {
-          <span class="review__date">{{ formatDate(logicalDate()!) }}</span>
+          <span class="date">{{ formatDate(logicalDate()!) }}</span>
         }
-        <div class="review__header-spacer"></div>
+        <div class="spacer"></div>
         <p-button label="Tag beenden" icon="pi pi-check" (onClick)="endDay()" />
       </div>
     </ng-template>
@@ -14,9 +14,9 @@
     @if (items().length === 0) {
       <p>Keine offenen Tasks für heute. 🎉</p>
     } @else {
-      <ul class="review__list">
+      <ul class="list">
         @for (item of items(); track item.habitId) {
-          <li class="review__item">
+          <li class="item">
             <p-checkbox
               [binary]="true"
               [ngModel]="item.completed"
@@ -24,15 +24,15 @@
               [inputId]="'habit-' + item.habitId" />
             <label
               [for]="'habit-' + item.habitId"
-              class="review__name"
-              [class.review__name--done]="item.completed">
+              class="name"
+              [class.done]="item.completed">
               {{ item.name }}
             </label>
             @if (item.overdue) {
               <p-tag severity="warn" value="Überfällig" />
             }
             @if (item.notes) {
-              <span class="review__notes">{{ item.notes }}</span>
+              <span class="notes">{{ item.notes }}</span>
             }
           </li>
         }
@@ -41,17 +41,17 @@
   </p-panel>
 
   @for (day of pastDays(); track day.date) {
-    <p-panel [header]="formatDate(day.date!)" class="review__day">
-      <ul class="review__list">
+    <p-panel [header]="formatDate(day.date!)">
+      <ul class="list">
         @for (item of day.items; track item.name) {
-          <li class="review__item review__item--past">
+          <li class="item past">
             <i
-              class="pi review__check"
+              class="pi check"
               [class.pi-check]="item.completed"
               [class.pi-times]="!item.completed"
-              [class.review__check--done]="item.completed"
-              [class.review__check--missed]="!item.completed"></i>
-            <span class="review__name" [class.review__name--done]="item.completed">{{ item.name }}</span>
+              [class.done]="item.completed"
+              [class.missed]="!item.completed"></i>
+            <span class="name" [class.done]="item.completed">{{ item.name }}</span>
             @if (item.overdue) {
               <p-tag severity="warn" value="Überfällig" />
             }

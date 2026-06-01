@@ -1,19 +1,19 @@
 <div class="system">
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="system__header">
+      <div class="header">
         <h2>Einstellungen</h2>
       </div>
     </ng-template>
 
-    <section class="system__section">
+    <section class="section">
       <h3>App</h3>
       @if (appDetails(); as d) {
-        <dl class="system__info">
+        <dl class="info">
           <dt>Build-Zeit</dt>
           <dd>{{ d.buildTime }}</dd>
           <dt>Build-Commit</dt>
-          <dd class="system__mono">{{ d.buildCommit }}</dd>
+          <dd class="mono">{{ d.buildCommit }}</dd>
           <dt>.NET-Version</dt>
           <dd>{{ d.dotNetVersion }}</dd>
           <dt>Betriebssystem</dt>
@@ -24,10 +24,10 @@
 
     @if (updateState.status(); as s) {
       @if (s.isUpdateFeatureAvailable) {
-        <section class="system__section">
+        <section class="section">
           <h3>Updates</h3>
 
-          <div class="system__update-card" [class.system__update-card--available]="s.isUpdateAvailable">
+          <div class="update-card" [class.available]="s.isUpdateAvailable">
             @if (s.isUpdateAvailable) {
               <p-tag severity="success" value="Update verfügbar" />
               <p>Eine neuere Version steht bereit.</p>
@@ -41,11 +41,11 @@
             }
 
             @if (s.lastCheck) {
-              <span class="system__muted">Zuletzt geprüft: {{ s.lastCheck | date: 'short' }}</span>
+              <span class="muted">Zuletzt geprüft: {{ s.lastCheck | date: 'short' }}</span>
             }
           </div>
 
-          <div class="system__update-actions">
+          <div class="update-actions">
             <p-button
               label="Jetzt prüfen"
               icon="pi pi-refresh"
@@ -60,7 +60,7 @@
               (onClick)="openLogs()" />
           </div>
 
-          <div class="system__auto">
+          <div class="auto">
             <p-toggleswitch
               [ngModel]="s.autoUpdate"
               (ngModelChange)="setAutoUpdate($event)"
@@ -80,13 +80,13 @@
   [style]="{ width: '44rem' }"
   header="Update-Logs">
   @if (logs().length === 0) {
-    <p class="system__muted">Noch keine Update-Logs vorhanden.</p>
+    <p class="muted">Noch keine Update-Logs vorhanden.</p>
   } @else {
-    <ul class="system__logs">
+    <ul class="logs">
       @for (entry of logs(); track entry.id) {
-        <li class="system__log">
-          <div class="system__muted">{{ entry.createdAt | date: 'short' }}</div>
-          <pre class="system__log-text">{{ entry.log }}</pre>
+        <li class="log">
+          <div class="muted">{{ entry.createdAt | date: 'short' }}</div>
+          <pre class="log-text">{{ entry.log }}</pre>
         </li>
       }
     </ul>
@@ -100,7 +100,7 @@
   [closeOnEscape]="false"
   [style]="{ width: '28rem' }"
   [showHeader]="false">
-  <div class="system__progress">
+  <div class="progress">
     <i class="pi pi-spin pi-spinner"></i>
     <span>Update wird installiert — die App startet gleich neu …</span>
   </div>

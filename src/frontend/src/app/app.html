@@ -1,11 +1,11 @@
 <div class="layout">
   <nav class="sidebar">
-    <div class="sidebar__logo">
+    <div class="logo">
       <i class="pi pi-check-circle"></i>
       <span>HabitTracker</span>
     </div>
 
-    <ul class="sidebar__nav">
+    <ul class="nav">
       <li>
         <a
           pRipple
@@ -24,7 +24,7 @@
         <a pRipple [routerLink]="['/settings']" routerLinkActive="active">
           <i class="pi pi-cog"></i> Einstellungen
           @if (updateState.isUpdateAvailable()) {
-            <i class="pi pi-circle-fill sidebar__badge"></i>
+            <i class="pi pi-circle-fill badge"></i>
           }
         </a>
       </li>

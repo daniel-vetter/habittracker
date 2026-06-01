@@ -1,9 +1,9 @@
 <div class="habits">
   <p-panel>
     <ng-template pTemplate="header">
-      <div class="habits__header">
+      <div class="header">
         <h2>Tasks</h2>
-        <div class="habits__header-spacer"></div>
+        <div class="spacer"></div>
         <p-button label="Neuer Task" icon="pi pi-plus" (onClick)="openNew()" />
       </div>
     </ng-template>
@@ -19,14 +19,14 @@
     <ng-template #body let-habit>
       <tr>
         <td>
-          <div class="habits__name">{{ habit.name }}</div>
+          <div class="name">{{ habit.name }}</div>
           @if (habit.notes) {
-            <div class="habits__notes">{{ habit.notes }}</div>
+            <div class="notes">{{ habit.notes }}</div>
           }
         </td>
         <td>{{ scheduleSummary(habit) }}</td>
         <td>
-          <div class="habits__row-actions">
+          <div class="row-actions">
             <p-button icon="pi pi-pencil" severity="secondary" text (onClick)="openEdit(habit)" />
             <p-button icon="pi pi-trash" severity="danger" text (onClick)="remove(habit)" />
           </div>
@@ -48,18 +48,18 @@
   [modal]="true"
   [style]="{ width: '40rem', height: '40rem' }"
   header="Task">
-  <div class="habits__form">
-    <div class="habits__field">
+  <div class="form">
+    <div class="field">
       <label for="name">Name</label>
       <input pInputText id="name" [(ngModel)]="form.name" autocomplete="off" />
     </div>
 
-    <div class="habits__field">
+    <div class="field">
       <label for="notes">Notiz (optional)</label>
       <textarea pTextarea id="notes" [(ngModel)]="form.notes" rows="2"></textarea>
     </div>
 
-    <div class="habits__field">
+    <div class="field">
       <label>Intervall</label>
       <p-select
         [options]="scheduleOptions"
@@ -69,14 +69,14 @@
     </div>
 
     @if (form.scheduleKind === ScheduleKind.EveryNDays) {
-      <div class="habits__field">
+      <div class="field">
         <label for="interval">Alle wie viele Tage?</label>
         <p-inputNumber id="interval" [(ngModel)]="form.intervalDays" [min]="1" [showButtons]="true" />
       </div>
     }
 
     @if (form.scheduleKind === ScheduleKind.Weekdays) {
-      <div class="habits__field">
+      <div class="field">
         <label>Wochentage</label>
         <p-selectButton
           [options]="weekdayOptions"
@@ -87,7 +87,7 @@
           [allowEmpty]="true" />
       </div>
 
-      <div class="habits__field">
+      <div class="field">
         <label>Wenn verpasst</label>
         <p-selectButton
           [options]="missPolicyOptions"
