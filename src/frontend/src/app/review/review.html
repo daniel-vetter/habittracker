@@ -39,6 +39,27 @@
       </ul>
     }
   </p-panel>
+
+  @for (day of pastDays(); track day.date) {
+    <p-panel [header]="formatDate(day.date!)" class="review__day">
+      <ul class="review__list">
+        @for (item of day.items; track item.name) {
+          <li class="review__item review__item--past">
+            <i
+              class="pi review__check"
+              [class.pi-check]="item.completed"
+              [class.pi-times]="!item.completed"
+              [class.review__check--done]="item.completed"
+              [class.review__check--missed]="!item.completed"></i>
+            <span class="review__name" [class.review__name--done]="item.completed">{{ item.name }}</span>
+            @if (item.overdue) {
+              <p-tag severity="warn" value="Überfällig" />
+            }
+          </li>
+        }
+      </ul>
+    </p-panel>
+  }
 </div>
 
 <p-confirmdialog />

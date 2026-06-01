@@ -6,7 +6,7 @@ import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { ReviewClient, ReviewItem, ToggleRequest } from '../server';
+import { ReviewClient, ReviewItem, ToggleRequest, PastDay } from '../server';
 
 @Component({
   selector: 'app-review',
@@ -21,6 +21,7 @@ export class Review implements OnInit {
 
   protected readonly items = signal<ReviewItem[]>([]);
   protected readonly logicalDate = signal<Date | undefined>(undefined);
+  protected readonly pastDays = signal<PastDay[]>([]);
 
   ngOnInit(): void {
     this.load();
@@ -30,6 +31,7 @@ export class Review implements OnInit {
     this.client.get().subscribe((response) => {
       this.items.set(response.items ?? []);
       this.logicalDate.set(response.logicalDate);
+      this.pastDays.set(response.pastDays ?? []);
     });
   }
 

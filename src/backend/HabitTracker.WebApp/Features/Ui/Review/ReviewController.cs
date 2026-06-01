@@ -34,7 +34,21 @@ public class ReviewController : ControllerBase
                 c.Habit.Id, c.Habit.Name, c.Habit.Notes, c.Completed, c.Overdue, c.Habit.ScheduleKind))
             .ToImmutableArray();
 
-        return new ReviewResponse(date, items);
+        var pastDays = (await _db.Completions
+                .Include(c => c.Habit)
+                .Include(c => c.Day)
+                .Where(c => c.Day.Closed)
+                .ToListAsync())
+            .GroupBy(c => c.Day.Date)
+            .OrderByDescending(g => g.Key)
+            .Select(g => new PastDay(
+                g.Key,
+                g.OrderBy(c => c.Habit.Name)
+                    .Select(c => new PastDayItem(c.Habit.Name, c.Completed, c.Overdue))
+                    .ToImmutableArray()))
+            .ToImmutableArray();
+
+        return new ReviewResponse(date, items, pastDays);
     }
 
     [HttpPost("toggle")]
@@ -62,7 +76,14 @@ public record ReviewItem(
     bool Overdue,
     ScheduleKind ScheduleKind);
 
-public record ReviewResponse(DateOnly LogicalDate, ImmutableArray<ReviewItem> Items);
+public record ReviewResponse(
+    DateOnly LogicalDate,
+    ImmutableArray<ReviewItem> Items,
+    ImmutableArray<PastDay> PastDays);
+
+public record PastDay(DateOnly Date, ImmutableArray<PastDayItem> Items);
+
+public record PastDayItem(string Name, bool Completed, bool Overdue);
 
 public record ToggleRequest(int HabitId, bool Completed);
 

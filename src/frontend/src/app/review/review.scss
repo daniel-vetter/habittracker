@@ -50,6 +50,24 @@
     }
   }
 
+  &__item--past &__name {
+    cursor: default;
+  }
+
+  &__check {
+    width: 1rem;
+    text-align: center;
+
+    &--done {
+      color: var(--p-primary-color);
+    }
+
+    &--missed {
+      color: var(--p-text-muted-color);
+      opacity: 0.6;
+    }
+  }
+
   &__notes {
     color: var(--p-text-muted-color);
     font-size: 0.875rem;
