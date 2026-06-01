@@ -51,7 +51,12 @@
   <div class="form">
     <div class="field">
       <label for="name">Name</label>
-      <input pInputText id="name" [(ngModel)]="form.name" autocomplete="off" />
+      <input
+        pInputText
+        id="name"
+        [(ngModel)]="form.name"
+        autocomplete="off"
+        (keydown.enter)="save()" />
     </div>
 
     <div class="field">
@@ -71,7 +76,12 @@
     @if (form.scheduleKind === ScheduleKind.EveryNDays) {
       <div class="field">
         <label for="interval">Alle wie viele Tage?</label>
-        <p-inputNumber id="interval" [(ngModel)]="form.intervalDays" [min]="1" [showButtons]="true" />
+        <p-inputNumber
+          id="interval"
+          [(ngModel)]="form.intervalDays"
+          [min]="1"
+          [showButtons]="true"
+          (keydown.enter)="save()" />
       </div>
     }
 

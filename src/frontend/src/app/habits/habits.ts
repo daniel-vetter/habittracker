@@ -104,6 +104,8 @@ export class Habits implements OnInit {
   }
 
   protected save(): void {
+    if (!this.form.name.trim()) return;
+
     const input = new HabitRequest({
       name: this.form.name.trim(),
       notes: this.form.notes?.trim() || undefined,
