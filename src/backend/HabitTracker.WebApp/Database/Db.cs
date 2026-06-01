@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using HabitTracker.WebApp.Features.Core.Habits;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,6 +11,26 @@ public class Db : DbContext
     public DbSet<DbHabit> Habits => Set<DbHabit>();
     public DbSet<DbDay> Days => Set<DbDay>();
     public DbSet<DbHabitCompletion> Completions => Set<DbHabitCompletion>();
+    public DbSet<DbUpdateLog> UpdateLogs => Set<DbUpdateLog>();
+    public DbSet<DbConfigEntry> ConfigEntries => Set<DbConfigEntry>();
+}
+
+/// <summary>Captured stdout/stderr of an update sidecar run, persisted after the new container booted.</summary>
+public class DbUpdateLog
+{
+    public int Id { get; set; }
+    public DateTimeOffset CreatedAt { get; set; }
+    public string Log { get; set; } = "";
+}
+
+/// <summary>Generic key/value store for small app settings (e.g. the auto-update flag).
+/// <see cref="Type"/> is a tag describing how <see cref="Value"/> was serialized.</summary>
+public class DbConfigEntry
+{
+    [Key]
+    public string Key { get; set; } = "";
+    public string Value { get; set; } = "";
+    public string Type { get; set; } = "";
 }
 
 public class DbHabit

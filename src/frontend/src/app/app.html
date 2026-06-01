@@ -20,6 +20,14 @@
           <i class="pi pi-list"></i> Tasks
         </a>
       </li>
+      <li>
+        <a pRipple [routerLink]="['/settings']" routerLinkActive="active">
+          <i class="pi pi-cog"></i> Einstellungen
+          @if (updateState.isUpdateAvailable()) {
+            <i class="pi pi-circle-fill sidebar__badge"></i>
+          }
+        </a>
+      </li>
     </ul>
   </nav>
 

@@ -1,0 +1,22 @@
+<div class="settings">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="settings__header">
+        <h2>Einstellungen</h2>
+      </div>
+    </ng-template>
+
+    <a [routerLink]="['/settings/system']" class="settings__entry">
+      <i class="pi pi-microchip"></i>
+      <b>
+        System
+        @if (updateState.isUpdateAvailable()) {
+          <p-tag severity="success" value="Update" />
+        }
+      </b>
+      <div>
+        Build- und Systeminformationen sowie Updates der Anwendung.
+      </div>
+    </a>
+  </p-panel>
+</div>

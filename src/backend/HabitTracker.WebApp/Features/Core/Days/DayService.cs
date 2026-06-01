@@ -18,6 +18,7 @@ public interface IDayService
     Task ResyncOpenDay();
 }
 
+[ScopedService<IDayService>]
 public class DayService : IDayService
 {
     private readonly Db _db;
