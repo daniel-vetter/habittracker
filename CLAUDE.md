@@ -7,10 +7,14 @@ Stack: .NET Aspire (AppHost) orchestriert ASP.NET Core Web API (Controller, EF C
 * EF Core Migrationen: nur den Up-Step behalten (Down entfernen). Namen in normaler Schreibweise, z.B. `"Added habit table"` statt `AddedHabitTable`.
 * Neue Migration anlegen: `dotnet ef migrations add "..." --output-dir Database/Migrations` (im Projekt `HabitTracker.WebApp`).
 * Bevorzuge `ImmutableArray` statt `Array`/`List` in Controller-Responses.
+* `ImmutableArray` mit `.ToImmutableArray()` erzeugen, **nicht** mit Collection-Expression-Spread (`[.. x]`). Leere `[]` ist ok.
 * Wenn ein Service ein zugehöriges Interface hat (z.B. `IHabitService` + `HabitService`), beides in **eine** Datei schreiben, benannt nach der Implementierung (`HabitService.cs`, ohne `I`-Prefix).
 * Keine statischen Methoden auf Services aufrufen — immer über DI injizieren und Instanzmethoden verwenden.
+* Methoden **nicht** mit `Async`-Suffix benennen, auch wenn sie `async`/`Task` zurückgeben (z.B. `GetReview()` statt `GetReviewAsync()`). Gilt für eigene Methoden; Framework-Methoden (`SaveChangesAsync`, `ToListAsync`, `MigrateAsync`) behalten ihren Namen.
+* Keine `CancellationToken`-Parameter durchreichen — die DB-Calls sind kurzlebig. EF-Methoden ohne `ct` aufrufen (`ToListAsync()`, `SaveChangesAsync()` etc.).
 * Nach Änderungen immer `dotnet build --no-incremental` verwenden, um Warnings zu prüfen (inkrementelle Builds verschlucken Warnings).
 * Feature-Folder-Konvention: Controller + DTOs nahe der UI-Seite, die sie bedienen, unter `Features/Ui/<Feature>/`; Domänen-Services unter `Features/Core/<Domain>/`.
+* DTO-Benennung: eingehende Request-Bodies enden auf `Request` (z.B. `HabitRequest`, `ToggleRequest`), zurückgegebene DTOs auf `Response` (z.B. `HabitResponse`, `ReviewResponse`) — **kein** `Input`/`Dto`-Suffix.
 
 ## Frontend / TypeScript
 

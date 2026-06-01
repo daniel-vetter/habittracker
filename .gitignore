@@ -22,6 +22,10 @@ src/frontend/src/app/server.ts
 data/
 *.db
 
+# Playwright (CLI snapshots/logs + screenshots)
+.playwright-cli/
+.playwright-mcp/
+
 # IDE
 .idea/
 *.swp

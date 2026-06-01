@@ -1,0 +1,108 @@
+<div class="habits">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="habits__header">
+        <h2>Tasks</h2>
+        <div class="habits__header-spacer"></div>
+        <p-button label="Neuer Task" icon="pi pi-plus" (onClick)="openNew()" />
+      </div>
+    </ng-template>
+
+    <p-table [value]="habits()" dataKey="id">
+    <ng-template #header>
+      <tr>
+        <th>Name</th>
+        <th>Plan</th>
+        <th style="width: 8rem"></th>
+      </tr>
+    </ng-template>
+    <ng-template #body let-habit>
+      <tr>
+        <td>
+          <div class="habits__name">{{ habit.name }}</div>
+          @if (habit.notes) {
+            <div class="habits__notes">{{ habit.notes }}</div>
+          }
+        </td>
+        <td>{{ scheduleSummary(habit) }}</td>
+        <td>
+          <div class="habits__row-actions">
+            <p-button icon="pi pi-pencil" severity="secondary" text (onClick)="openEdit(habit)" />
+            <p-button icon="pi pi-trash" severity="danger" text (onClick)="remove(habit)" />
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template #emptymessage>
+      <tr>
+        <td colspan="3">Noch keine Tasks angelegt.</td>
+      </tr>
+    </ng-template>
+    </p-table>
+  </p-panel>
+</div>
+
+<p-dialog
+  [visible]="dialogVisible()"
+  (visibleChange)="dialogVisible.set($event)"
+  [modal]="true"
+  [style]="{ width: '40rem', height: '40rem' }"
+  header="Task">
+  <div class="habits__form">
+    <div class="habits__field">
+      <label for="name">Name</label>
+      <input pInputText id="name" [(ngModel)]="form.name" autocomplete="off" />
+    </div>
+
+    <div class="habits__field">
+      <label for="notes">Notiz (optional)</label>
+      <textarea pTextarea id="notes" [(ngModel)]="form.notes" rows="2"></textarea>
+    </div>
+
+    <div class="habits__field">
+      <label>Intervall</label>
+      <p-select
+        [options]="scheduleOptions"
+        [(ngModel)]="form.scheduleKind"
+        optionLabel="label"
+        optionValue="value" />
+    </div>
+
+    @if (form.scheduleKind === ScheduleKind.EveryNDays) {
+      <div class="habits__field">
+        <label for="interval">Alle wie viele Tage?</label>
+        <p-inputNumber id="interval" [(ngModel)]="form.intervalDays" [min]="1" [showButtons]="true" />
+      </div>
+    }
+
+    @if (form.scheduleKind === ScheduleKind.Weekdays) {
+      <div class="habits__field">
+        <label>Wochentage</label>
+        <p-selectButton
+          [options]="weekdayOptions"
+          [(ngModel)]="form.weekdays"
+          optionLabel="label"
+          optionValue="value"
+          [multiple]="true"
+          [allowEmpty]="true" />
+      </div>
+
+      <div class="habits__field">
+        <label>Wenn verpasst</label>
+        <p-selectButton
+          [options]="missPolicyOptions"
+          [(ngModel)]="form.missPolicy"
+          optionLabel="label"
+          optionValue="value"
+          [allowEmpty]="false" />
+      </div>
+    }
+  </div>
+
+  <ng-template #footer>
+    <p-button label="Abbrechen" severity="secondary" text (onClick)="dialogVisible.set(false)" />
+    <p-button label="Speichern" icon="pi pi-check" [disabled]="!form.name.trim()" (onClick)="save()" />
+  </ng-template>
+</p-dialog>
+
+<p-confirmdialog />

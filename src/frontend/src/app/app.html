@@ -1,1 +1,31 @@
-<router-outlet />
+<div class="layout">
+  <nav class="sidebar">
+    <div class="sidebar__logo">
+      <i class="pi pi-check-circle"></i>
+      <span>HabitTracker</span>
+    </div>
+
+    <ul class="sidebar__nav">
+      <li>
+        <a
+          pRipple
+          [routerLink]="['']"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }">
+          <i class="pi pi-check-square"></i> Heute
+        </a>
+      </li>
+      <li>
+        <a pRipple [routerLink]="['/habits']" routerLinkActive="active">
+          <i class="pi pi-list"></i> Tasks
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="wrapper">
+    <main class="content">
+      <router-outlet />
+    </main>
+  </div>
+</div>

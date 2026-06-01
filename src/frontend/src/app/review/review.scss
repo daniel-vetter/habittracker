@@ -1,0 +1,57 @@
+.review {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  &__header {
+    display: flex;
+    align-items: baseline;
+    width: 100%;
+    gap: 1rem;
+
+    h2 {
+      margin: 0;
+    }
+  }
+
+  &__header-spacer {
+    flex: 1;
+  }
+
+  &__date {
+    color: var(--p-text-muted-color);
+    text-transform: capitalize;
+  }
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  &__name {
+    cursor: pointer;
+
+    &--done {
+      text-decoration: line-through;
+      color: var(--p-text-muted-color);
+    }
+  }
+
+  &__notes {
+    color: var(--p-text-muted-color);
+    font-size: 0.875rem;
+  }
+}

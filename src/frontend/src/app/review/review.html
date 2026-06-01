@@ -1,0 +1,44 @@
+<div class="review">
+  <p-panel>
+    <ng-template pTemplate="header">
+      <div class="review__header">
+        <h2>Heute</h2>
+        @if (logicalDate()) {
+          <span class="review__date">{{ formatDate(logicalDate()!) }}</span>
+        }
+        <div class="review__header-spacer"></div>
+        <p-button label="Tag beenden" icon="pi pi-check" (onClick)="endDay()" />
+      </div>
+    </ng-template>
+
+    @if (items().length === 0) {
+      <p>Keine offenen Tasks für heute. 🎉</p>
+    } @else {
+      <ul class="review__list">
+        @for (item of items(); track item.habitId) {
+          <li class="review__item">
+            <p-checkbox
+              [binary]="true"
+              [ngModel]="item.completed"
+              (onChange)="toggle(item, $event.checked)"
+              [inputId]="'habit-' + item.habitId" />
+            <label
+              [for]="'habit-' + item.habitId"
+              class="review__name"
+              [class.review__name--done]="item.completed">
+              {{ item.name }}
+            </label>
+            @if (item.overdue) {
+              <p-tag severity="warn" value="Überfällig" />
+            }
+            @if (item.notes) {
+              <span class="review__notes">{{ item.notes }}</span>
+            }
+          </li>
+        }
+      </ul>
+    }
+  </p-panel>
+</div>
+
+<p-confirmdialog />

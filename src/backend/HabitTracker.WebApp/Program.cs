@@ -1,4 +1,5 @@
 using HabitTracker.WebApp.Database;
+using HabitTracker.WebApp.Features.Core.Days;
 using HabitTracker.WebApp.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,6 +10,8 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers();
 
 builder.AddNpgsqlDbContext<Db>("db");
+
+builder.Services.AddScoped<IDayService, DayService>();
 
 builder.Services.AddOpenApiDocument(x =>
 {
