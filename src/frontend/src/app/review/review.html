@@ -2,7 +2,7 @@
   <p-panel>
     <ng-template pTemplate="header">
       <div class="header">
-        <h2>Heute</h2>
+        <h2>{{ title() }}</h2>
         @if (logicalDate()) {
           <span class="date">{{ formatDate(logicalDate()!) }}</span>
         }

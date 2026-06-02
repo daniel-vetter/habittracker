@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { PanelModule } from 'primeng/panel';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -22,6 +22,31 @@ export class Review implements OnInit {
   protected readonly items = signal<ReviewItem[]>([]);
   protected readonly logicalDate = signal<Date | undefined>(undefined);
   protected readonly pastDays = signal<PastDay[]>([]);
+
+  protected readonly title = computed(() => {
+    const date = this.logicalDate();
+    if (!date) {
+      return 'Heute';
+    }
+
+    // Aktuelles Datum, 6 Stunden zurück (langer Tag), auf Mitternacht normalisiert.
+    const now = new Date();
+    now.setHours(now.getHours() - 6, 0, 0, 0);
+    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const day = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
+    const diffDays = Math.round((day.getTime() - today.getTime()) / 86_400_000);
+    switch (diffDays) {
+      case 0:
+        return 'Heute';
+      case -1:
+        return 'Gestern';
+      case 1:
+        return 'Morgen';
+      default:
+        return new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(day);
+    }
+  });
 
   ngOnInit(): void {
     this.load();
